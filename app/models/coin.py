@@ -1,18 +1,11 @@
-import datetime
 import enum
 
 from sqlalchemy import Column, String, Integer, Boolean, DateTime, Double, Enum
 from sqlalchemy.types import JSON
 from app.config.database import Base
+from app.models.common import BaseModel
+
 target_metadata = Base.metadata
-
-
-class BaseModel(Base):
-    __abstract__ = True
-
-    id = Column(Integer, primary_key=True, index=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
 
 class Coin(BaseModel):
