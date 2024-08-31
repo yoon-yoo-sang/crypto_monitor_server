@@ -36,7 +36,7 @@ class CoinPriceHistory(BaseModel):
     __tablename__ = "coin_price_history"
 
     coin_id = Column(Integer, nullable=False)
-    price = Column(Integer, nullable=False)
+    price = Column(Double, nullable=False)
     timestamp = Column(DateTime, nullable=False)
     change = Column(Enum(CoinPriceHistoryChange), nullable=False)
     change_price = Column(Double, nullable=False)
