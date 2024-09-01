@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.auth.auth import JWTBearer
-from app.config.database import get_db
-from app.services.coin_service import get_all_coins, get_coin_details, get_coin_histories
-from app.schemas.coin_schema import CoinResponse, CoinDetailResponse, CoinHistoryResponse
+from src.auth.auth import JWTBearer
+from src.config.database import get_db
+from src.services.coin_service import get_all_coins, get_coin_details, get_coin_histories
+from src.schemas.coin_schema import CoinResponse, CoinDetailResponse, CoinHistoryResponse
 
 router = APIRouter()
 

@@ -3,8 +3,8 @@ from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy import func, desc
 
-from app.models.coin import CoinPriceHistory, CoinAnalysisHistory, Coin
-from app.schemas.coin_schema import CoinResponse, CoinDetailResponse, CoinHistoryResponse
+from src.models.coin import CoinPriceHistory, CoinAnalysisHistory, Coin
+from src.schemas.coin_schema import CoinResponse, CoinDetailResponse, CoinHistoryResponse
 
 
 def get_all_coins(db: Session):
@@ -39,6 +39,7 @@ def get_all_coins(db: Session):
         db.query(
             Coin.id,
             Coin.market,
+            Coin.korean_name,
             latest_price_subquery.c.change,
             latest_price_subquery.c.change_rate,
             latest_price_subquery.c.price,
@@ -54,6 +55,7 @@ def get_all_coins(db: Session):
         CoinResponse(
             id=result.id,
             market=result.market,
+            korean_name=result.korean_name,
             change=result.change,
             change_rate=result.change_rate,
             current_price=result.price,

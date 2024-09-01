@@ -2,7 +2,7 @@ import datetime
 
 from sqlalchemy import Column, Integer, DateTime
 
-from app.config.database import Base
+from src.config.database import Base
 
 
 class BaseModel(Base):

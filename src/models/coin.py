@@ -2,8 +2,8 @@ import enum
 
 from sqlalchemy import Column, String, Integer, Boolean, DateTime, Double, Enum
 from sqlalchemy.types import JSON
-from app.config.database import Base
-from app.models.common import BaseModel
+from src.config.database import Base
+from src.models.common import BaseModel
 
 target_metadata = Base.metadata
 

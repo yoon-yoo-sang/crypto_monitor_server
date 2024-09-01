@@ -3,7 +3,7 @@ import os
 import pytest
 from dotenv import load_dotenv
 from httpx import AsyncClient, ASGITransport
-from app.main import app
+from src.main import app
 
 
 load_dotenv()

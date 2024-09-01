@@ -1,8 +1,8 @@
 import jwt
 from dotenv import load_dotenv
 
-from app.utils.jwt_utils import create_access_token, verify_token
-from app.config.settings import JWT_SECRET_KEY
+from src.utils.jwt_utils import create_access_token, verify_token
+from src.config.settings import JWT_SECRET_KEY
 
 
 load_dotenv()

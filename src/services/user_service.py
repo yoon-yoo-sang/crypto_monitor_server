@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
 
-from app.models.user import User
-from app.schemas.user_schema import UserBase, UserCreate
-from app.config.database import SessionLocal
-from app.utils.jwt_utils import create_access_token, create_secret_token, verify_token
+from src.models.user import User
+from src.schemas.user_schema import UserBase, UserCreate
+from src.config.database import SessionLocal
+from src.utils.jwt_utils import create_access_token, create_secret_token, verify_token
 
 
 def create_user(user_data: UserBase) -> UserCreate:

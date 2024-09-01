@@ -2,10 +2,10 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
-from app.auth.auth import JWTBearer
-from app.config.database import get_db
-from app.services.user_service import create_user, social_login, get_access_token_by_refresh_token
-from app.schemas.user_schema import UserCreate, UserBase, UserLogin, RefreshToken
+from src.auth.auth import JWTBearer
+from src.config.database import get_db
+from src.services.user_service import create_user, social_login, get_access_token_by_refresh_token
+from src.schemas.user_schema import UserCreate, UserBase, UserLogin, RefreshToken
 
 router = APIRouter()
 

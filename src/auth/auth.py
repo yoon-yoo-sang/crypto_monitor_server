@@ -1,7 +1,7 @@
 import jwt
 from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from app.config.settings import JWT_SECRET_KEY, ADMIN_TOKEN
+from src.config.settings import JWT_SECRET_KEY, ADMIN_TOKEN
 
 
 class JWTBearer(HTTPBearer):

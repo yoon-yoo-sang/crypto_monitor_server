@@ -1,6 +1,6 @@
 import jwt
 from datetime import datetime, timedelta
-from app.config.settings import JWT_SECRET_KEY, ACCESS_TOKEN_EXPIRE_MINUTES
+from src.config.settings import JWT_SECRET_KEY, ACCESS_TOKEN_EXPIRE_MINUTES
 
 
 def create_access_token(data: dict):

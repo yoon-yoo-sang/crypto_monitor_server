@@ -18,6 +18,7 @@ class CoinCreate(CoinBase):
 class CoinResponse(BaseModel):
     id: int
     market: str
+    korean_name: str
     change: str
     change_rate: float
     current_price: float
