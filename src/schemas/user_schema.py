@@ -10,6 +10,7 @@ class UserBase(BaseModel):
 class UserCreate(BaseModel):
     id: int
     created_at: str
+    social_id: str
     username: str
     email: str
 

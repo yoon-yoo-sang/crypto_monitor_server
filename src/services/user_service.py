@@ -1,20 +1,33 @@
+from typing import Tuple
+
 from sqlalchemy.orm import Session
 
+from src.config.database import SessionLocal
 from src.models.user import User
 from src.schemas.user_schema import UserBase, UserCreate
-from src.config.database import SessionLocal
-from src.utils.jwt_utils import create_access_token, create_secret_token, verify_token
+from src.utils.error_codes import ErrorDetails
+from src.utils.jwt_utils import get_new_token
+
+
+def social_login_or_register(user_data: UserBase, db: Session) -> Tuple[dict[str, str], int]:
+    try:
+        return social_login(user_data.social_id, db), 200
+    except ValueError as e:
+        if str(e) == ErrorDetails.USER_NOT_FOUND.value["message"]:
+            new_user = create_user(user_data)
+            return get_new_token(new_user.social_id), 201
+        else:
+            print(e)
+            raise e
 
 
 def create_user(user_data: UserBase) -> UserCreate:
     db = SessionLocal()
     try:
-        # 사용자 중복 체크
         existing_user = db.query(User).filter(User.social_id == user_data.social_id).first()
         if existing_user:
-            raise Exception("User already exists with this social ID")
+            raise Exception(ErrorDetails.USER_ALREADY_EXISTS.value["message"])
 
-        # 새로운 사용자 생성
         new_user = User(
             social_id=user_data.social_id,
             username=user_data.username,
@@ -25,9 +38,9 @@ def create_user(user_data: UserBase) -> UserCreate:
         db.commit()
         db.refresh(new_user)
 
-        # 응답 모델로 변환
         return UserCreate(
             id=new_user.id,
+            social_id=new_user.social_id,
             created_at=new_user.created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
             username=new_user.username,
             email=new_user.email
@@ -36,30 +49,11 @@ def create_user(user_data: UserBase) -> UserCreate:
         db.close()
 
 
-def social_login(social_id: str, db: Session):
+def social_login(social_id: str, db: Session) -> dict[str, str]:
     # 사용자 조회
     user = db.query(User).filter(User.social_id == social_id).first()
 
     if not user:
-        raise ValueError("Invalid social ID")
+        raise ValueError(ErrorDetails.USER_NOT_FOUND.value["message"])
 
-    # 토큰 생성
-    access_token = create_access_token({"sub": user.social_id})
-    secret_token = create_secret_token({"sub": user.social_id})
-
-    return {
-        "access_token": access_token,
-        "secret_token": secret_token
-    }
-
-
-def get_access_token_by_refresh_token(refresh_token: str):
-    if not verify_token(refresh_token):
-        raise ValueError("Invalid token")
-
-    # 토큰 생성
-    access_token = create_access_token({"sub": refresh_token})
-
-    return {
-        "access_token": access_token
-    }
+    return get_new_token(social_id)
